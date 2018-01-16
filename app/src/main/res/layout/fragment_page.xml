@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="352dp"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#E0E0E0">
+
+
+    <LinearLayout
+        android:id="@+id/time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/layer_card_drawable"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/time_info"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:maxLines="2"
+            android:textColor="@color/appColor"
+            tools:text="45 minutes (15 miles) from here to there" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/money_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/time_layout"
+        android:background="@drawable/layer_card_drawable"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/money_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:textSize="18sp"
+            android:maxLines="3"
+            tools:text="Expected cost is approximately $10, with $5 for gas and $5 for operating cost"
+            android:textColor="@color/appColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emissions_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/money_layout"
+        android:orientation="horizontal"
+        android:background="@drawable/layer_card_drawable"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/emissions_info"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:maxLines="2"
+            tools:text="Driving will release 10 kg of CO2 into the atmosphere"
+            android:textColor="@color/appColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/earth_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emissions_layout"
+        android:orientation="horizontal"
+        android:background="@drawable/layer_card_drawable"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/earth_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:textSize="18sp"
+            android:text="How does the Earth feel?"
+            android:textColor="@color/appColor"/>
+
+        <ImageView
+            android:id="@+id/earth_feeling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dead_icon"
+            android:paddingLeft="4dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/launch_navigation_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/appColor"
+        android:textColor="@android:color/white"
+        android:text="Let's go!" />
+
+
+</RelativeLayout>

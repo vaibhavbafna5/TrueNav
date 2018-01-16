@@ -2,9 +2,10 @@ package com.example.vaibhav.truenav;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.akexorcist.googledirection.DirectionCallback;
@@ -28,19 +29,22 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, DirectionCallback{
 
     private GoogleMap googleMap;
     private LatLng origin;
     private LatLng destination;
-    private Direction requestedDirection;
+    private Direction drivingDirection;
+    private Direction walkingDirection;
+    private Direction transitDirection;
     private Route route;
+    private FloatingActionButton showInfoButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
 
@@ -92,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         startFragment.setOnPlaceSelectedListener(startLocationListener);
         endFragment.setOnPlaceSelectedListener(endLocationListener);
+
+        showInfoButton = findViewById(R.id.show_fragment_button);
     }
 
     @Override
@@ -110,23 +116,60 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void executeNetworkRequest() {
 
+        long currentTime = getCurrentTime();
         String serverKey = "AIzaSyAJ7NeKcYQAii0g_Qt6FlzjD4hUAw0SiGo";
+
+        //gets driving data
         GoogleDirection.withServerKey(serverKey)
                 .from(origin)
                 .to(destination)
+                .departureTime(Long.toString(currentTime))
                 .transportMode(TransportMode.DRIVING)
                 .execute(new DirectionCallback() {
 
                     @Override
                     public void onDirectionSuccess(Direction direction, String rawBody) {
-                        requestedDirection = direction;
+                        drivingDirection = direction;
                         drawRoute();
-                        testInfo();
                     }
 
                     @Override
                     public void onDirectionFailure(Throwable t) { }
 
+                });
+
+        //gets transit data
+        GoogleDirection.withServerKey(serverKey)
+                .from(origin)
+                .to(destination)
+                .transportMode(TransportMode.TRANSIT)
+                .execute(new DirectionCallback() {
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String rawBody) {
+                        transitDirection = direction;
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+
+                    }
+                });
+
+        //gets walking data
+        GoogleDirection.withServerKey(serverKey)
+                .from(origin)
+                .to(destination)
+                .transportMode(TransportMode.WALKING)
+                .execute(new DirectionCallback() {
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String rawBody) {
+                        walkingDirection = direction;
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+
+                    }
                 });
 
     }
@@ -137,9 +180,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(origin);
         builder.include(destination);
-//        LatLng cameraPosition = builder.build();
-
-        LatLngBounds bounds = builder.build();
 
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels;
@@ -148,23 +188,94 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //draws the line
         Context drawingContext = getApplicationContext();
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 9));
         googleMap.addMarker(new MarkerOptions().position(origin));
         googleMap.addMarker(new MarkerOptions().position(destination));
-        ArrayList<LatLng> directionPositionList = requestedDirection.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
+        ArrayList<LatLng> directionPositionList = drivingDirection.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
         googleMap.addPolyline(DirectionConverter.createPolyline(drawingContext, directionPositionList, 5, Color.BLUE));
 
+        //creates the bottom sheet dialog with relevant info
+        showInfo();
     }
 
-    public void testInfo() {
+    public void showInfo() {
+        TrueData walkingData = convertData(walkingDirection, false, TrueData.DirectionType.WALKING);
+        TrueData transitData = convertData(transitDirection, false, TrueData.DirectionType.TRANSIT);
+        TrueData drivingData = convertData(drivingDirection, true, TrueData.DirectionType.DRIVING);
 
-        TextView dummyTextView = (TextView) findViewById(R.id.dummy_textview);
-        route = requestedDirection.getRouteList().get(0);
-        Leg leg = route.getLegList().get(0);
-        Info info = leg.getDuration();
-        dummyTextView.setText(info.getText());
+        //send relevant data (origin, destination, transport) to fragment
+        Bundle args = new Bundle();
+
+        //sends origin data
+        args.putDouble("originLat", origin.latitude);
+        args.putDouble("originLong", origin.longitude);
+
+        //sends destination data
+        args.putDouble("destinationLat", destination.latitude);
+        args.putDouble("destinationLong", destination.longitude);
+
+        //sends walking data
+        args.putString("walkingDistance", walkingData.distance);
+        args.putString("walkingDuration", walkingData.duration);
+
+        //sends transit data
+        args.putString("transitDistance", transitData.distance);
+        args.putString("transitDuration", transitData.duration);
+
+        //sends driving data
+        args.putString("drivingDistance", drivingData.distance);
+        args.putString("drivingDuration", drivingData.duration);
+        args.putString("drivingTraffic", drivingData.traffic);
+
+        //creates the fragment
+        final InformationFragment informationFragment = new InformationFragment();
+        informationFragment.setArguments(args);
+
+        //shows the view and button
+        informationFragment.show(getSupportFragmentManager(), informationFragment.getTag());
+
+        showInfoButton.setVisibility(View.VISIBLE);
+        showInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                informationFragment.show(getSupportFragmentManager(), informationFragment.getTag());
+            }
+        });
 
     }
 
+    public long getCurrentTime() {
+        long now = System.currentTimeMillis();
+        now = now / 1000;
+        return now;
+    }
+
+    public TrueData convertData(Direction direction, Boolean driving, TrueData.DirectionType directionType) {
+        //gets object with relevant data
+
+
+        List<Route> routeList = direction.getRouteList();
+        Route route = routeList.get(0);
+        List<Leg> legList = route.getLegList();
+        Leg leg = legList.get(0);
+
+        //gets distance
+        Info info = leg.getDistance();
+        String distance = info.getText();
+
+        //gets travel time
+        info = leg.getDuration();
+        String duration = info.getText();
+
+        String traffic = "";
+
+        if (driving) {
+            //gets travel time with traffic
+            info = leg.getDurationInTraffic();
+            traffic = info.getText();
+        }
+
+        TrueData trueData = new TrueData(distance, duration, traffic, driving, directionType);
+        return trueData;
+    }
 
 }

@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#66BB6A"
+        android:background="#2E7D32"
         android:layout_marginTop="10dp"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
@@ -47,13 +47,16 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:background="#66BB6A"
-        android:id="@+id/dummy_textview"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"/>
-
+    <android.support.design.widget.FloatingActionButton
+        android:visibility="invisible"
+        android:id="@+id/show_fragment_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="bottom|right"
+        app:useCompatPadding="true"
+        app:backgroundTint="@color/appColor"
+        android:src="@drawable/up_icon"/>
 
 
 </FrameLayout>
