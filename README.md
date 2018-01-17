@@ -24,6 +24,6 @@ Metrics for determining "true cost":
 * Financial Cost
 * Environmental Impact 
 
-[Here's the finished product:](https://gifs.com/gif/truenavdemo-W7mx4o) 
+[![Demo CountPages alpha](https://share.gifyoutube.com/KzB6Gb.gif)](https://www.youtube.com/watch?v=ek1j272iAmc)
 
 
