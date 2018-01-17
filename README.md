@@ -24,4 +24,6 @@ Metrics for determining "true cost":
 * Financial Cost
 * Environmental Impact 
 
-Halfway through this, I realized that such an analysis was too difficult to conduct for all American cities given the lack of data so I decided to narrow my scope to New York City. 
+[Here's the finished product:](https://gifs.com/gif/truenavdemo-W7mx4o) 
+
+
