@@ -26,4 +26,4 @@ Metrics for determining "true cost":
 
 Here it is in action: 
 
-![Demo](https://user-images.githubusercontent.com/23254343/35067054-a44f85d8-fba0-11e7-91c3-046e0e2ee1b3.gif)
+<iframe src='//gifs.com/embed/true-nav-quick-demo-voDW4r' frameborder='0' scrolling='no' width='720px' height='1280px' style='-webkit-backface-visibility: hidden;-webkit-transform: scale(1);' ></iframe>
