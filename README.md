@@ -26,6 +26,4 @@ Metrics for determining "true cost":
 
 Here it is in action: 
 
-[![20180117 121438 edited](https://gifs.com/gif/truenavdemo-W7mx4o)](https://www.youtube.com/watch?v=awLi4izwguA&feature=youtu.be)
-
-
+![Alt Text](https://j.gifs.com/voDW4r.gif)
