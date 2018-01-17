@@ -26,4 +26,4 @@ Metrics for determining "true cost":
 
 Here it all is in action!
 
-![Alt_Text](https://media.giphy.com/media/26n3JdxOKfoXHMMAU/giphy.gif)
+![Alt_Text](https://media.giphy.com/media/3o751Xi3dssUlFv5ZK/giphy.gif)
