@@ -26,4 +26,4 @@ Metrics for determining "true cost":
 
 Here it is in action: 
 
-![](https://j.gifs.com/voDW4r.gif)
+![Demo](https://user-images.githubusercontent.com/23254343/35067054-a44f85d8-fba0-11e7-91c3-046e0e2ee1b3.gif)
