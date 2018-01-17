@@ -26,4 +26,4 @@ Metrics for determining "true cost":
 
 Here it is in action: 
 
-![Alt Text](https://j.gifs.com/voDW4r.gif)
+[True Nav Quick Demo](https://j.gifs.com/voDW4r.gif)
