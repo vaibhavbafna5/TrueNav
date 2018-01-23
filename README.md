@@ -12,7 +12,7 @@ Clearly a problem exists, but so does a solution.
 ## The Solution
 
 
-Before I could start typing away, it was important to do research and understand the nuances of the problem I was dealing with. After reading the existing literature, I decided that version 1 of the app would look at popular modes of transport and give the user an analysis of their journey based on a few key metrics. 
+Before I could start typing away, it was important to do research and understand the nuances of the problem I was dealing with. After reading the existing literature, I realized that there simply wasn't enough data to encompass most American citieis, so I decided that V1 of the app would start with NYC, include popular modes of transport, and give the user an analysis of their journey based on a few key metrics. 
 
 Modes of transport:
 * Walking
@@ -24,6 +24,6 @@ Metrics for determining "true cost":
 * Financial Cost
 * Environmental Impact 
 
-Here it is in action: 
+Here it all is in action!
 
-![Demo](https://user-images.githubusercontent.com/23254343/35067054-a44f85d8-fba0-11e7-91c3-046e0e2ee1b3.gif)
+![Alt_Text](https://media.giphy.com/media/3o751Xi3dssUlFv5ZK/giphy.gif)

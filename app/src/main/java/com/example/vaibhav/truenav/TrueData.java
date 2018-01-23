@@ -50,7 +50,7 @@ public class TrueData {
         if (givenTraffic) {
             i = 0;
             while (traffic.charAt(i) != ' ') {
-                ++i;
+                ++i; 
             }
             traffic = traffic.substring(0, i);
         }
