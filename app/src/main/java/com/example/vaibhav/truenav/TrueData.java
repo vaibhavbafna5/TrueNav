@@ -1,7 +1,6 @@
 package com.example.vaibhav.truenav;
 
-//handles all the business logic
-
+//all data is processed and played with here
 public class TrueData {
 
     enum DirectionType {
@@ -10,12 +9,15 @@ public class TrueData {
         DRIVING;
     }
 
+    //constants being used
     private final int OP_COST = 60;
     private final int GAS_COST = 260;
+    private final int AVG_MILEAGE = 25;
     private final int CAR_EMISSIONS_COST = 411; //note: this is in grams
     private final int TRANSIT_EMISSIONS_COST = 105; //note: this is in grams
     private final String TRANSIT_COST = "2.75";
 
+    //member variables
     int mGasCost = 0;
     int mOpCost = 0;
     String distance;
@@ -25,14 +27,18 @@ public class TrueData {
     DirectionType directionType;
 
     public TrueData(String dist, String dur, String traf, Boolean givenTraffic, DirectionType directionType) {
+
         this.distance = dist;
         this.duration = dur;
         this.traffic = traf;
         this.givenTraffic = givenTraffic;
         this.directionType = directionType;
+
     }
 
+    //makes sure data is processed and ready for processing
     public void cleanData() {
+
         //handles distance
         int i = 0;
         while (distance.charAt(i) != ' ') {
@@ -48,21 +54,27 @@ public class TrueData {
             }
             traffic = traffic.substring(0, i);
         }
+
     }
 
+    //calculates financial cost of a car trip based on operations & gas
     public int calculateCost() {
+
         double dist = Double.parseDouble(distance);
         double opCost = dist * OP_COST;
-        double gasCost = dist * GAS_COST;
+        double gasCost = (dist /  AVG_MILEAGE) * GAS_COST;
         float totalCost = (float) (opCost + gasCost);
         totalCost = totalCost / 100;
         int tCost = Math.round(totalCost);
         mGasCost = Math.round((float) gasCost / 100);
         mOpCost = tCost - mGasCost;
         return tCost;
+
     }
 
+    //calculates emissions of a journey based on form of transit
     public int calculateEmissions() {
+
         double dist = Double.parseDouble(distance);
         float emissions = 0;
         if (givenTraffic) {
@@ -72,17 +84,24 @@ public class TrueData {
         }
         emissions = emissions / 1000;
         return Math.round(emissions);
+
     }
 
+    //formats time data so that it is ready to be displayed
     public String createTimeText() {
+
         String response = duration;
+
         switch (directionType) {
+
             case WALKING:
                 response = response + " (" + distance + " miles) to your destination";
                 break;
+
             case TRANSIT:
                 response = response + " (" + distance + " miles) with no delays";
                 break;
+
             case DRIVING:
                 String durationCopy = duration;
                 int j = 0;
@@ -94,6 +113,7 @@ public class TrueData {
                 int trafficTime = Integer.valueOf(traffic);
                 int travelTime = trafficTime - duration;
                 String trafficStatus = "";
+
                 if (givenTraffic) {
                     if (travelTime <= 0) {
                         trafficStatus = "no";
@@ -105,51 +125,68 @@ public class TrueData {
                         trafficStatus = "heavy";
                     }
                 }
+
                 response = response + " (" + distance + " miles) with " + trafficStatus + " traffic";
                 break;
+
             default:
                 break;
         }
+
         return response;
+
     }
 
+    //formats cost data so it is ready to be displayed
     public String createCostText() {
 
         String response = "Expected cost is ";
+
         switch (directionType) {
+
             case WALKING:
                 response = response + "$0!!";
                 break;
+
             case TRANSIT:
                 response = response + "$" + TRANSIT_COST;
                 break;
+
             case DRIVING:
                 int totalCost = calculateCost();
                 response = response + "approximately $" + totalCost + ", with gas costing $" + mGasCost +
                         " and $" + mOpCost + " for miscellaneous costs";
                 break;
+
             default:
                 break;
         }
+
         return response;
+
     }
 
+    //formats emission data so it is ready to be displayed
     public String createEmissionsText() {
 
         String response = "";
         int emissionsAmount = 0;
+
         switch (directionType) {
             case WALKING:
                 response = "Walking will release 0 kg of CO2 into the atmosphere";
                 break;
+
             case TRANSIT:
                 emissionsAmount = calculateEmissions();
                 response = "Taking public transit will release " + emissionsAmount + " kg of CO2 into the atmosphere";
                 break;
+
             case DRIVING:
                 emissionsAmount = calculateEmissions();
                 response = "Taking public transit will release " + emissionsAmount + " kg of CO2 into the atmosphere";
                 break;
+
             default:
                 break;
         }

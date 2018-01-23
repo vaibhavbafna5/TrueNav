@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 public class PageFragment extends Fragment {
@@ -26,6 +24,7 @@ public class PageFragment extends Fragment {
 
     public static PageFragment newInstance(int page, ArrayList<TrueData> directionsData,
                                            LatLng originData, LatLng destinationData) {
+
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         PageFragment fragment = new PageFragment();
@@ -34,12 +33,15 @@ public class PageFragment extends Fragment {
         destination = destinationData;
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE, 0);
+
     }
 
     @Override
@@ -96,6 +98,7 @@ public class PageFragment extends Fragment {
         });
 
         return view;
+
     }
 
 }

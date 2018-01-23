@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
 import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
 import com.akexorcist.googledirection.constant.TransportMode;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         setContentView(R.layout.activity_main);
 
-        //CREATES THE MAP
+        //creates the map
         ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
 
-        //FINDS THE START & END LOCATION
+        //finds the start and end location
         PlaceAutocompleteFragment startFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.starting_location_autocomplete);
 
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         endFragment.getView().setBackgroundColor(Color.parseColor("#F5F5F5"));
 
 
-        //SETS THE STARTING & ENDING LOCATION
+        //sets the start and ending location
         PlaceSelectionListener startLocationListener = new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -98,13 +96,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         endFragment.setOnPlaceSelectedListener(endLocationListener);
 
         showInfoButton = findViewById(R.id.show_fragment_button);
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         this.googleMap = googleMap;
         LatLng nyc = new LatLng(40.7808, -73.9772);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nyc, 12));
+
     }
 
     @Override
@@ -195,9 +196,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //creates the bottom sheet dialog with relevant info
         showInfo();
+
     }
 
     public void showInfo() {
+
+        //creates data package for each form of transport
         TrueData walkingData = convertData(walkingDirection, false, TrueData.DirectionType.WALKING);
         TrueData transitData = convertData(transitDirection, false, TrueData.DirectionType.TRANSIT);
         TrueData drivingData = convertData(drivingDirection, true, TrueData.DirectionType.DRIVING);
@@ -233,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //shows the view and button
         informationFragment.show(getSupportFragmentManager(), informationFragment.getTag());
 
+        //creates button as information fragment is shown
         showInfoButton.setVisibility(View.VISIBLE);
         showInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,16 +248,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    //used for getting traffic data
     public long getCurrentTime() {
+
         long now = System.currentTimeMillis();
         now = now / 1000;
         return now;
+
     }
 
     public TrueData convertData(Direction direction, Boolean driving, TrueData.DirectionType directionType) {
+
         //gets object with relevant data
-
-
         List<Route> routeList = direction.getRouteList();
         Route route = routeList.get(0);
         List<Leg> legList = route.getLegList();
@@ -276,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         TrueData trueData = new TrueData(distance, duration, traffic, driving, directionType);
         return trueData;
+
     }
 
 }

@@ -1,27 +1,16 @@
 package com.example.vaibhav.truenav;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import com.akexorcist.googledirection.model.Direction;
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
-import biz.laenger.android.vpbs.BottomSheetUtils;
 import biz.laenger.android.vpbs.ViewPagerBottomSheetDialogFragment;
-
-import static android.support.design.widget.BottomSheetBehavior.PEEK_HEIGHT_AUTO;
 
 public class InformationFragment extends ViewPagerBottomSheetDialogFragment {
 
@@ -32,6 +21,7 @@ public class InformationFragment extends ViewPagerBottomSheetDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         //gets direction data from the main activity
         ArrayList<TrueData> directions = new ArrayList<>();
 
@@ -105,6 +95,7 @@ public class InformationFragment extends ViewPagerBottomSheetDialogFragment {
         }
 
         return rootView;
+
     }
 
 }

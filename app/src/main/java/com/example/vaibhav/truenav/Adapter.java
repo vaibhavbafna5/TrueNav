@@ -1,15 +1,11 @@
 package com.example.vaibhav.truenav;
 
-
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import com.akexorcist.googledirection.model.Direction;
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 public class Adapter extends FragmentPagerAdapter {
@@ -24,6 +20,7 @@ public class Adapter extends FragmentPagerAdapter {
 
     public Adapter(FragmentManager fm, Context context, ArrayList<TrueData> directions,
                    LatLng origin, LatLng destination) {
+
         super(fm);
         this.context = context;
         this.directions = directions;
@@ -32,6 +29,7 @@ public class Adapter extends FragmentPagerAdapter {
         }
         this.origin = origin;
         this.destination = destination;
+
     }
 
     @Override
@@ -41,6 +39,7 @@ public class Adapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         switch (position) {
             case 0:
                 return PageFragment.newInstance(0, directions, origin, destination);
@@ -51,6 +50,7 @@ public class Adapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
+
     }
 
     @Override
